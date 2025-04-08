@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.VirtualLibWeb.VirtualLib.persistence.entity.Libro;
-import com.VirtualLibWeb.VirtualLib.service.libro_interface.LibroService;
+import com.VirtualLibWeb.VirtualLib.persistence.entity.LibroEntity;
+import com.VirtualLibWeb.VirtualLib.service.libro.libro_interface.ILibroService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -18,22 +20,32 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/libros")
 public class LibroController {
 
-    private final LibroService libroService;
+    private final ILibroService libroService;
 
-    public LibroController(LibroService libroService) {
+    public LibroController(ILibroService libroService) {
         this.libroService = libroService;
     }
 
     // Formulario para guardar un libro
     @GetMapping("/formulario")
     public String librosForm(Model model) {
-        model.addAttribute("libro", new Libro());
+        model.addAttribute("libro", new LibroEntity());
         return "forms/form_libro";
     }
 
     // Guardamos el libro
     @PostMapping("/guardar")
-    public String saveLibro(@ModelAttribute Libro libro, RedirectAttributes redirectAttributes) {
+    public String saveLibro(@Valid @ModelAttribute("libro") LibroEntity libro,
+            BindingResult result, RedirectAttributes redirectAttributes) {
+
+        if (libroService.existsByIsbn(libro.getIsbn())) {
+            result.rejectValue("isbn", "error.libro", "El ISBN ya está en uso");
+        }
+
+        if (result.hasErrors()) {
+            return "forms/form_libro";
+        }
+
         try {
             libroService.saveLibro(libro);
             redirectAttributes.addFlashAttribute("success", "Libro guardado correctamente");
@@ -63,10 +75,9 @@ public class LibroController {
         return "redirect:/libros";
     }
 
-
     @GetMapping("/editar/{id}")
     public String editLibro(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
-        Libro libro = libroService.findLibroById(id);
+        LibroEntity libro = libroService.findLibroById(id);
         if (libro == null) {
             redirectAttributes.addFlashAttribute("error", "El libro no existe");
             return "redirect:/libros";
@@ -76,24 +87,27 @@ public class LibroController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String updateLibro(@PathVariable Long id, @ModelAttribute("libro") Libro libro,
-                              BindingResult result, RedirectAttributes redirectAttributes) {
+    public String updateLibro(@PathVariable Long id, @Valid @ModelAttribute("libro") LibroEntity libro,
+            BindingResult result, RedirectAttributes redirectAttributes) {
 
-        
+        LibroEntity libroBuscado = libroService.findByIsbn(libro.getIsbn());
+
+        if (libroBuscado != null && !libroBuscado.getId().equals(id)) {
+            result.rejectValue("isbn", "error.libro", "El ISBN ya está en uso");
+        }
+
         if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("error", "Error al actualizar el libro");
             return "forms/edit_libro";
         }
-        try{
+
+        try {
             libroService.updateLibro(libro);
             redirectAttributes.addFlashAttribute("success", "Libro actualizado correctamente");
-        }catch (Exception __){
+        } catch (Exception __) {
             redirectAttributes.addFlashAttribute("error", "Error al actualizar el libro");
         }
-        
 
         return "redirect:/libros";
     }
-    
 
 }

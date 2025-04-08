@@ -1,4 +1,4 @@
-package com.VirtualLibWeb.VirtualLib.service.usuario_interface;
+package com.VirtualLibWeb.VirtualLib.service.user.usuario_interface;
 
 import java.util.Optional;
 

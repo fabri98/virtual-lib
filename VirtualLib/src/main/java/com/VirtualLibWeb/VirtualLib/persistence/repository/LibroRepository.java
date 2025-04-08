@@ -6,16 +6,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.VirtualLibWeb.VirtualLib.persistence.entity.Libro;
+import com.VirtualLibWeb.VirtualLib.persistence.entity.LibroEntity;
 
 import jakarta.transaction.Transactional;
 
 @Repository
-public interface LibroRepository extends JpaRepository<Libro, Long> {
+public interface LibroRepository extends JpaRepository<LibroEntity, Long> {
 
        @Modifying
        @Transactional
-       @Query("UPDATE Libro l SET l.titulo = :titulo, l.autor = :autor, l.editorial = :editorial, " +
+       @Query("UPDATE LibroEntity l SET l.titulo = :titulo, l.autor = :autor, l.editorial = :editorial, " +
                      "l.genero = :genero, l.anioPublicacion = :anioPublicacion, " +
                      "l.cantidadEjemplaresDisponibles = :cantidadEjemplaresDisponibles, " +
                      "l.isbn = :isbn WHERE l.id = :id")
@@ -27,4 +27,8 @@ public interface LibroRepository extends JpaRepository<Libro, Long> {
                      @Param("anioPublicacion") String anioPublicacion,
                      @Param("cantidadEjemplaresDisponibles") int cantidadEjemplaresDisponibles,
                      @Param("isbn") String isbn);
+
+       boolean existsByIsbn(String isbn); // query method
+       LibroEntity findByIsbn(String isbn);
+
 }

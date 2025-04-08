@@ -1,4 +1,4 @@
-package com.VirtualLibWeb.VirtualLib.service.usuario_security;
+package com.VirtualLibWeb.VirtualLib.service.user.usuario_security;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.User;
 
 import com.VirtualLibWeb.VirtualLib.persistence.entity.UserDetailsImpl;
 import com.VirtualLibWeb.VirtualLib.persistence.entity.UserEntity;
-import com.VirtualLibWeb.VirtualLib.service.usuario_interface.IUserService;
+import com.VirtualLibWeb.VirtualLib.service.user.usuario_interface.IUserService;
 
 
 @Service

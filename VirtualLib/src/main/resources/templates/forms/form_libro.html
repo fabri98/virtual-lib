@@ -7,7 +7,7 @@
 <body>
     <div class="container">
         
-        <!-- Incluir el sidebar -->
+        <!-- Incluimos el sidebar -->
         <div th:replace="~{fragments/fragments :: sidebar}"></div>
 
 
@@ -23,29 +23,42 @@
                 <h2>Registrar Nuevo Libro</h2>
                 <form th:action="@{/libros/guardar}" method="post" th:object="${libro}">
                     
+                    <label for="isbn">ISBN:</label>
+                    <input type="text" id="isbn" name="isbn" th:field="*{isbn}" required>
+                    <span th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></span>
+                    
+
                     <label for="titulo">Título:</label>
                     <input type="text" id="titulo" name="titulo" th:field="*{titulo}" required>
+                    <span th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></span>
 
                     <label for="autor">Autor:</label>
                     <input type="text" id="autor" name="autor" th:field="*{autor}" required>
+                    <span th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></span>
 
                     <label for="editorial">Editorial:</label>
                     <input type="text" id="editorial" name="editorial" th:field="*{editorial}" required>
+                    <span th:if="${#fields.hasErrors('editorial')}" th:errors="*{editorial}"></span>
 
-                    <label for="isbn">ISBN:</label>
-                    <input type="text" id="isbn" name="isbn" th:field="*{isbn}" required>
-
+                    
                     <label for="anioPublicacion">Año de Publicación:</label>
                     <input type="text" id="anioPublicacion" name="anioPublicacion" th:field="*{anioPublicacion}" required>
+                    <span th:if="${#fields.hasErrors('anioPublicacion')}" th:errors="*{anioPublicacion}"></span>
 
                     <label for="genero">Género:</label>
                     <input type="text" id="genero" name="genero" th:field="*{genero}" required>
+                    <span th:if="${#fields.hasErrors('genero')}" th:errors="*{genero}"></span>
+
 
                     <label for="cantidadEjemplaresDisponibles">Ejemplares Disponibles:</label>
                     <input type="number" id="cantidadEjemplaresDisponibles" name="cantidadEjemplaresDisponibles" th:field="*{cantidadEjemplaresDisponibles}" required>
+                    <span th:if="${#fields.hasErrors('cantidadEjemplaresDisponibles')}" th:errors="*{cantidadEjemplaresDisponibles}"></span>
+
 
                     <label for="numeroDePaginas">Número de Páginas:</label>
                     <input type="number" id="numeroDePaginas" name="numeroDePaginas" th:field="*{numeroDePaginas}" required>
+                    <span th:if="${#fields.hasErrors('numeroDePaginas')}" th:errors="*{numeroDePaginas}"></span>
+
 
                     <button type="submit">Guardar Libro</button>
                 </form>
