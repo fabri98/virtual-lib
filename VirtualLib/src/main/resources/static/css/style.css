@@ -1,0 +1,415 @@
+/* Reset y configuración base */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    height: 100vh;
+    background: url('/img/biblioteca.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+
+/* Estilo del login */
+.login-container {
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 350px;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+}
+/* Contenedor principal */
+.container {
+    display: flex;
+    width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 260px;
+    background: rgba(13, 71, 161, 0.9);
+    color: white;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 100vh;
+    position: relative;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 22px;
+    letter-spacing: 1px;
+}
+
+.sidebar hr {
+    border: 0;
+    height: 1px;
+    background: white;
+    margin: 15px 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 12px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.sidebar ul li:hover, .sidebar ul .active {
+    background: #1565c0;
+    transform: scale(1.05);
+}
+
+/* Contenido principal */
+.content {
+    flex: 1;
+    padding: 25px;
+    background: rgba(244, 244, 244, 0.9);
+    border-radius: 10px;
+    margin: 20px;
+    min-width: 300px;
+}
+
+/* Header */
+header {
+    background: rgba(25, 118, 210, 0.9);
+    color: white;
+    padding: 18px;
+    border-radius: 5px;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Sección de formularios */
+.form-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 25px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Imagen dentro del formulario */
+.library-img {
+    display: none; /* La imagen ya es fondo */
+}
+
+/* Contenedor del formulario */
+.form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Inputs */
+input {
+    padding: 12px;
+    margin: 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    width: 100%;
+    max-width: 400px;
+}
+
+input:focus {
+    border-color: #1976d2;
+    outline: none;
+}
+
+/* Botón */
+button {
+    background: #1976d2;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    max-width: 200px;
+}
+
+button:hover {
+    background: #0d47a1;
+    transform: scale(1.05);
+}
+
+/* === NUEVOS ESTILOS PARA LISTADO DE LIBROS === */
+
+/* Sección de listado de libros */
+.books-section {
+    margin-top: 25px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.books-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.books-header h2 {
+    color: #1976d2;
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+}
+
+.filter-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-container input,
+.filter-container select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    transition: border-color 0.3s;
+}
+
+.filter-container input:focus,
+.filter-container select:focus {
+    border-color: #1976d2;
+    outline: none;
+}
+
+/* Tabla de libros */
+.books-table-container {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.books-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.books-table th {
+    background: rgba(25, 118, 210, 0.9);
+    color: white;
+    padding: 12px 15px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.books-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(204, 204, 204, 0.5);
+}
+
+.books-table tr:hover {
+    background: rgba(232, 240, 254, 0.8);
+}
+
+/* Botones de acción en la tabla */
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-edit,
+.btn-delete {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    font-size: 14px;
+    font-weight: bold;
+    max-width: 80px;
+    text-align: center;
+}
+
+.btn-edit {
+    background: #1976d2;
+    color: white;
+}
+
+.btn-edit:hover {
+    background: #0d47a1;
+    transform: scale(1.05);
+}
+
+.btn-delete {
+    background: #f44336;
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #d32f2f;
+    transform: scale(1.05);
+}
+
+/* Estilo para los mensajes de alerta */
+.alert {
+    padding: 12px 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.alert-success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.alert-danger {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+}
+
+/* Paginación */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-pagination {
+    background: rgba(25, 118, 210, 0.8);
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    font-size: 14px;
+    max-width: 120px;
+}
+
+.btn-pagination:hover {
+    background: #0d47a1;
+    transform: scale(1.05);
+}
+
+.page-info {
+    font-size: 14px;
+    color: #555;
+}
+
+/* 📌 Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .sidebar {
+        width: 100%;
+        text-align: center;
+        min-height: auto;
+    }
+    
+    .content {
+        width: 90%;
+        margin: 10px;
+    }
+    
+    .form-section, .books-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .books-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .filter-container {
+        width: 100%;
+    }
+    
+    input, button, .filter-container input, .filter-container select {
+        max-width: 100%;
+    }
+    
+    .actions {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .pagination {
+        flex-wrap: wrap;
+    }
+}

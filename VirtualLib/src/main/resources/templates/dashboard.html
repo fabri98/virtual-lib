@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragments/fragments :: head}"></head>
+<body>
+    <div class="container">
+        <!-- Sidebar usando fragmento con formato moderno -->
+        <div th:replace="~{fragments/fragments :: sidebar}"></div>
+
+        <div class="content">
+            <!-- Header usando fragmento con formato moderno -->
+            <header th:replace="~{fragments/fragments :: header}"></header>
+
+
+            <p th:text="${nombre}"></p>
+            
+
+            <div class="form-section">
+                
+                <div class="form-container">
+                    <h3>Folio Usuario</h3>
+                    <input type="text" placeholder="Ingrese el folio del usuario">
+                    <h3>Libro ID</h3>
+                    <input type="text" placeholder="Ingrese el ID del libro a prestar">
+                    <button>Prestar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

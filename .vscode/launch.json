@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-VirtualLibApplication<VirtualLib>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.VirtualLibWeb.VirtualLib.VirtualLibApplication",
+            "projectName": "VirtualLib",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

@@ -1,0 +1,36 @@
+
+
+<head th:fragment="head">
+    <title>Virtual Lib</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+
+    <!-- Sidebar -->
+    <div th:fragment="sidebar">
+        <div class="sidebar">
+            <h2>Virtul Lib</h2>
+            <hr>
+            <ul>
+                <li><i class="fas fa-home"></i> Principal</li>
+                <li><i class="fas fa-book"></i> Préstamos</li>
+                <li><i class="fas fa-undo"></i> Devoluciones</li>
+                <li><i class="fas fa-users"></i> Usuarios</li>
+                <li><i class="fas fa-book-open"></i> Libros</li>
+                <li><i class="fas fa-chart-bar"></i> Reportes</li>
+                <li><form th:action="@{/logout}" method="post">
+                    <button type="submit">Cerrar sesión</button>
+                </form></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header th:fragment="header">
+        <h1>Administración / Control / Biblioteca</h1>
+        <p>Hoy es <span th:text="${#dates.format(#dates.createNow(), 'EEEE, dd MMMM yyyy')}"></span></p>
+    </header>
+
+
+
