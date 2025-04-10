@@ -9,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -34,6 +36,8 @@ public class AlumnoEntity {
 
     @Column(name="legajo", nullable = false, unique = true)
     @NotNull(message = ValidacionMensaje.CAMPO_OBLIGATORIO)
+    @Min(value = 10000, message = ValidacionMensaje.LEGAJO_INVALIDO)
+    @Max(value = 99999, message = ValidacionMensaje.LEGAJO_INVALIDO)
     private Long legajo;
     
     @Column(name="nombre", nullable = false)

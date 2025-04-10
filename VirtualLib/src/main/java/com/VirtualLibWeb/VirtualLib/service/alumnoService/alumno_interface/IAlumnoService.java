@@ -13,4 +13,5 @@ public interface IAlumnoService {
     void delete(Long legajo);
     AlumnoEntity toEntity(AlumnoDTO alumnoDTO);
     AlumnoDTO toDTO(AlumnoEntity alumnoEntity);
+    void update(AlumnoEntity alumnoEntity);
 }

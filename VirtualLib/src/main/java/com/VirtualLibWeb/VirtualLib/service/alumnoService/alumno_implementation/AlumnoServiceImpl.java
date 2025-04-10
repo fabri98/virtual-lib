@@ -10,7 +10,7 @@ import com.VirtualLibWeb.VirtualLib.presentation.controllers.alumno.dto.AlumnoDT
 import com.VirtualLibWeb.VirtualLib.service.alumnoService.alumno_interface.IAlumnoService;
 
 @Service
-public class AlumnoServiceImpl implements IAlumnoService{
+public class AlumnoServiceImpl implements IAlumnoService {
 
     private final IAlumnoRepository alumnoRepository;
 
@@ -21,22 +21,28 @@ public class AlumnoServiceImpl implements IAlumnoService{
     @Override
     public AlumnoEntity toEntity(AlumnoDTO alumnoDTO) {
         AlumnoEntity alumnoEntity = AlumnoEntity.builder()
-        .legajo(alumnoDTO.getLegajo())
-        .nombre(alumnoDTO.getNombre())
-        .apellido(alumnoDTO.getApellido())
-        .telefono(alumnoDTO.getTelefono())
-        .email(alumnoDTO.getEmail())
-        .build();
+                .legajo(alumnoDTO.getLegajo())
+                .nombre(alumnoDTO.getNombre())
+                .apellido(alumnoDTO.getApellido())
+                .telefono(alumnoDTO.getTelefono())
+                .email(alumnoDTO.getEmail())
+                .build();
 
         return alumnoEntity;
     }
 
     @Override
     public AlumnoDTO toDTO(AlumnoEntity alumnoEntity) {
-        
-        AlumnoDTO alumnoDTO = AlumnoDTO.builder().build();
 
-        return null;
+        AlumnoDTO alumnoDTO = AlumnoDTO.builder()
+                .legajo(alumnoEntity.getLegajo())
+                .nombre(alumnoEntity.getNombre())
+                .apellido(alumnoEntity.getApellido())
+                .telefono(alumnoEntity.getTelefono())
+                .email(alumnoEntity.getEmail())
+                .build();
+
+        return alumnoDTO;
     }
 
     @Override
@@ -64,5 +70,11 @@ public class AlumnoServiceImpl implements IAlumnoService{
         return alumnoRepository.findByLegajo(legajo);
     }
 
+    @Override
+    public void update(AlumnoEntity alumnoEntity) {
+        alumnoRepository.update(alumnoEntity.getId(), alumnoEntity.getLegajo(), alumnoEntity.getNombre(),
+                alumnoEntity.getApellido(), alumnoEntity.getTelefono(),
+                alumnoEntity.getEmail());
+    }
 
 }

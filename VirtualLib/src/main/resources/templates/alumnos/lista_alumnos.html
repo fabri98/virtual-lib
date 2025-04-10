@@ -43,7 +43,7 @@
                                 <td th:text="${alumno.email}"></td>
                                 <td class="actions">
                                     
-                                    <form th:action="@{/alumnos/editar/} + ${alumno.id}" method="get">
+                                    <form th:action="@{/alumnos/editar/} + ${alumno.legajo}" method="get">
                                         <button type="submit" class="btn-edit">Editar</button>
                                     </form>
 

@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.VirtualLibWeb.VirtualLib.persistence.entity.AlumnoEntity;
+import com.VirtualLibWeb.VirtualLib.persistence.entity.LibroEntity;
 import com.VirtualLibWeb.VirtualLib.presentation.controllers.alumno.dto.AlumnoDTO;
 import com.VirtualLibWeb.VirtualLib.service.alumnoService.alumno_interface.IAlumnoService;
 
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/alumnos")
@@ -79,6 +78,43 @@ public class AlumnoController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al eliminar el alumno");
         }
+        return "redirect:/alumnos";
+    }
+
+    @GetMapping("/editar/{legajo}")
+    public String editAlumno(@PathVariable Long legajo, Model model, RedirectAttributes redirectAttributes) {
+        AlumnoEntity alumnoEntity = alumnoService.findByLegajo(legajo);
+
+        if (alumnoEntity == null) {
+            redirectAttributes.addAttribute("error", "El alumno no existe");
+        }
+        model.addAttribute("alumno", alumnoEntity);
+
+        return "forms/edit_alumno";
+    }
+
+    // Actualiza un alumno
+    @PostMapping("/actualizar/{id}")
+    public String updateAlumno(@PathVariable Long id, @Valid @ModelAttribute("alumno") AlumnoEntity alumnoEntity,
+            BindingResult result, RedirectAttributes redirectAttributes) {
+
+        AlumnoEntity alumnoBuscado = alumnoService.findByLegajo(alumnoEntity.getLegajo());
+
+        if (alumnoBuscado != null && !alumnoBuscado.getId().equals(id)) {
+            result.rejectValue("legajo", "error.alumno", "El legajo ya está en uso");
+        }
+
+        if (result.hasErrors()) {
+            return "forms/edit_alumno";
+        }
+
+        try {
+            alumnoService.update(alumnoEntity);
+            redirectAttributes.addFlashAttribute("success", "Alumno actualizado correctamente");
+        } catch (Exception __) {
+            redirectAttributes.addFlashAttribute("error", "Error al actualizar el alumno");
+        }
+
         return "redirect:/alumnos";
     }
 
