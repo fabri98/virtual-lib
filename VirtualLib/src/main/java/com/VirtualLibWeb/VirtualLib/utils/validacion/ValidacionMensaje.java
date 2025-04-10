@@ -1,4 +1,4 @@
-package com.VirtualLibWeb.VirtualLib.utils;
+package com.VirtualLibWeb.VirtualLib.utils.validacion;
 
 public class ValidacionMensaje {
     public static final String CAMPO_OBLIGATORIO = "Este campo es obligatorio";

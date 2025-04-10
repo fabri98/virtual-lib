@@ -3,14 +3,16 @@ package com.VirtualLibWeb.VirtualLib.service.libro.libro_interface;
 import java.util.List;
 
 import com.VirtualLibWeb.VirtualLib.persistence.entity.LibroEntity;
+import com.VirtualLibWeb.VirtualLib.presentation.controllers.libro.dto.LibroDTO;
 
 public interface ILibroService {
 
-    void saveLibro(LibroEntity libro);
+    void saveLibro(LibroDTO libro);
     LibroEntity findLibroById(Long id);
-    List<LibroEntity> findAll();
-    void deleteLibro(Long id);
+    List<LibroDTO> findAll();
+    void deleteLibro(String isbn);
     void updateLibro(LibroEntity libro);
     boolean existsByIsbn(String isbn);
     LibroEntity findByIsbn(String isbn);
+    LibroDTO toDTO(LibroEntity libroEntity);
 }

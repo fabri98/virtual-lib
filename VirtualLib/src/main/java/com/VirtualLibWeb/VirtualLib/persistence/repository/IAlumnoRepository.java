@@ -8,4 +8,5 @@ import com.VirtualLibWeb.VirtualLib.persistence.entity.AlumnoEntity;
 @Repository
 public interface IAlumnoRepository extends JpaRepository<AlumnoEntity, Long>{
     boolean existsByLegajo(Long legajo);
+    AlumnoEntity findByLegajo(Long legajo);
 }

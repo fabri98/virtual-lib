@@ -12,52 +12,42 @@
             
             <div class="books-section">
                 <div class="books-header">
-                    <h2>Catálogo de Libros</h2>
-                    <div class="filter-container">
-                        <input type="text" placeholder="Buscar libro...">
-                        <select>
-                            <option value="">Todos los géneros</option>
-                            <option value="novela">Novela</option>
-                            <option value="ciencia">Ciencia</option>
-                            <option value="historia">Historia</option>
-                            <option value="ficcion">Ficción</option>
-                        </select>
+                    <h2>Listado de Alumnos</h2>
+                    <div th:if="${mensaje}" >
+                        <p th:text="${mensaje}"></p>
                     </div>
+                    
                 </div>
                 
+                <div th:if="${alumnos}"> 
+
                 <div class="books-table-container">
                     <table class="books-table">
                         <thead>
                             <tr>
-                                <th>ISBN</th>
-                                <th>Título</th>
-                                <th>Autor</th>
-                                <th>Editorial</th>
-                                <th>Año</th>
-                                <th>Género</th>
-                                <th>Ejemplares</th>
-                                <th>Páginas</th>
+                                <th>LEGAJO</th>
+                                <th>NOMBRE</th>
+                                <th>APELLIDO</th>
+                                <th>TELÉFONO</th>
+                                <th>EMAIL</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <!-- Iteración sobre la lista de libros -->
-                            <tr th:each="libro : ${libros}">
-                                <td th:text="${libro.isbn}"></td>
-                                <td th:text="${libro.titulo}"></td>
-                                <td th:text="${libro.autor}"></td>
-                                <td th:text="${libro.editorial}"></td> 
-                                <td th:text="${libro.anioPublicacion}"></td>
-                                <td th:text="${libro.genero}"></td>
-                                <td th:text="${libro.cantidadEjemplaresDisponibles}"></td>
-                                <td th:text="${libro.numeroDePaginas}"></td>
+                            <tr th:each="alumno : ${alumnos}">
+                                <td th:text="${alumno.legajo}"></td>
+                                <td th:text="${alumno.nombre}"></td>
+                                <td th:text="${alumno.apellido}"></td>
+                                <td th:text="${alumno.telefono}"></td> 
+                                <td th:text="${alumno.email}"></td>
                                 <td class="actions">
                                     
-                                    <form th:action="@{/libros/editar/} + ${libro.isbn}" method="get">
+                                    <form th:action="@{/alumnos/editar/} + ${alumno.id}" method="get">
                                         <button type="submit" class="btn-edit">Editar</button>
                                     </form>
 
-                                    <form th:action="@{/libros/eliminar/} + ${libro.isbn}" method="post">
+                                    <form th:action="@{/alumnos/eliminar/} + ${alumno.legajo}" method="post">
                                         <input type="hidden" name="_method" value="delete"/>
                                         <button type="submit" class="btn-delete">
                                             <i class="fas fa-trash"></i> Eliminar
@@ -80,13 +70,14 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
 </body>
 
 <script th:inline="javascript">
     document.querySelectorAll('.btn-delete').forEach(button => {
         button.addEventListener('click', (e) => {
-            if (!confirm('¿Estás seguro de que quieres eliminar este libro?')) {
+            if (!confirm('¿Estás seguro de que quieres eliminar este alumno?')) {
                 e.preventDefault();
             }
         });

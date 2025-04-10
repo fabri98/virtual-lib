@@ -1,6 +1,6 @@
 package com.VirtualLibWeb.VirtualLib.persistence.entity;
 
-import com.VirtualLibWeb.VirtualLib.utils.ValidacionMensaje;
+import com.VirtualLibWeb.VirtualLib.utils.validacion.ValidacionMensaje;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

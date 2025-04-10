@@ -11,7 +11,7 @@ import com.VirtualLibWeb.VirtualLib.persistence.entity.LibroEntity;
 import jakarta.transaction.Transactional;
 
 @Repository
-public interface LibroRepository extends JpaRepository<LibroEntity, Long> {
+public interface ILibroRepository extends JpaRepository<LibroEntity, Long> {
 
        @Modifying
        @Transactional
@@ -26,9 +26,9 @@ public interface LibroRepository extends JpaRepository<LibroEntity, Long> {
                      @Param("genero") String genero,
                      @Param("anioPublicacion") String anioPublicacion,
                      @Param("cantidadEjemplaresDisponibles") int cantidadEjemplaresDisponibles,
-                     @Param("isbn") String isbn);
+                     @Param("isbn") String isbn,
+                     @Param("numeroDePaginas") int numero_de_paginas);
 
        boolean existsByIsbn(String isbn); // query method
        LibroEntity findByIsbn(String isbn);
-
 }

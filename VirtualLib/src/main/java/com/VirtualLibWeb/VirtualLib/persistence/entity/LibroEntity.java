@@ -1,6 +1,6 @@
 package com.VirtualLibWeb.VirtualLib.persistence.entity;
 
-import com.VirtualLibWeb.VirtualLib.utils.ValidacionMensaje;
+import com.VirtualLibWeb.VirtualLib.utils.validacion.ValidacionMensaje;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,10 +8,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +24,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class LibroEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,11 +61,13 @@ public class LibroEntity {
     
     @Column(name = "cantidad_ejemplares_disponibles", nullable = false)
     @NotNull(message = ValidacionMensaje.CAMPO_OBLIGATORIO)
+    @Min(1)
     private int cantidadEjemplaresDisponibles;
     
-    @Column(name = "cantidad_ejemplares_total", nullable = false)
+    @Column(name = "numero_de_paginas", nullable = false)
     @NotNull(message = ValidacionMensaje.CAMPO_OBLIGATORIO)
-    private int numeroDePaginas = 1;
+    @Min(1)
+    private int numeroDePaginas;
 
 
 }

@@ -1,35 +1,75 @@
 package com.VirtualLibWeb.VirtualLib.service.libro.libro_implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.VirtualLibWeb.VirtualLib.persistence.entity.LibroEntity;
-import com.VirtualLibWeb.VirtualLib.persistence.repository.LibroRepository;
+import com.VirtualLibWeb.VirtualLib.persistence.repository.ILibroRepository;
+import com.VirtualLibWeb.VirtualLib.presentation.controllers.libro.dto.LibroDTO;
 import com.VirtualLibWeb.VirtualLib.service.libro.libro_interface.ILibroService;
 
 @Service
 public class LibroServiceImpl implements ILibroService {
 
-    private final LibroRepository libroRepository;
+    private final ILibroRepository libroRepository;
 
-    public LibroServiceImpl(LibroRepository libroRepository) {
+    public LibroServiceImpl(ILibroRepository libroRepository) {
         this.libroRepository = libroRepository;
     }
 
-    public void saveLibro(LibroEntity libro) {
+    public LibroEntity toEntity(LibroDTO libroDTO) {
 
-        libroRepository.save(libro);
-
-    }
-
-    public List<LibroEntity> findAll() {
-        return libroRepository.findAll();
+        LibroEntity libroEntity = LibroEntity.builder()
+                .isbn(libroDTO.getIsbn())
+                .titulo(libroDTO.getTitulo())
+                .autor(libroDTO.getAutor())
+                .editorial(libroDTO.getEditorial())
+                .anioPublicacion(libroDTO.getAnioPublicacion())
+                .genero(libroDTO.getGenero())
+                .cantidadEjemplaresDisponibles(libroDTO.getCantidadEjemplaresDisponibles())
+                .numeroDePaginas(libroDTO.getNumeroDePaginas())
+                .build();
+        return libroEntity;
     }
 
     @Override
-    public void deleteLibro(Long id) {
-        libroRepository.deleteById(id);
+    public LibroDTO toDTO(LibroEntity libroEntity) {
+        LibroDTO libroDTO = LibroDTO.builder()
+                .isbn(libroEntity.getIsbn())
+                .titulo(libroEntity.getTitulo())
+                .autor(libroEntity.getAutor())
+                .editorial(libroEntity.getEditorial())
+                .anioPublicacion(libroEntity.getAnioPublicacion())
+                .genero(libroEntity.getGenero())
+                .cantidadEjemplaresDisponibles(libroEntity.getCantidadEjemplaresDisponibles())
+                .numeroDePaginas(libroEntity.getNumeroDePaginas())
+                .build();
+        return libroDTO;
+    }
+
+    public void saveLibro(LibroDTO libroDto) {
+
+        libroRepository.save(toEntity(libroDto));
+
+    }
+
+    public List<LibroDTO> findAll() {
+
+        List<LibroEntity> librosEntity = libroRepository.findAll();
+        List<LibroDTO> librosDTOs = new ArrayList<>();
+
+        librosEntity.forEach(libroEntity -> {
+            librosDTOs.add(toDTO(libroEntity));
+        });
+
+        return librosDTOs;
+    }
+
+    @Override
+    public void deleteLibro(String isbn) {
+        libroRepository.delete(libroRepository.findByIsbn(isbn));
     }
 
     @Override
@@ -42,7 +82,8 @@ public class LibroServiceImpl implements ILibroService {
 
         libroRepository.updateLibro(libro.getId(),
                 libro.getTitulo(), libro.getAutor(), libro.getEditorial(), libro.getGenero(),
-                libro.getAnioPublicacion(), libro.getCantidadEjemplaresDisponibles(), libro.getIsbn());
+                libro.getAnioPublicacion(), libro.getCantidadEjemplaresDisponibles(), libro.getIsbn(),
+                libro.getNumeroDePaginas());
 
     }
 
