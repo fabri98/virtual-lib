@@ -1,5 +1,6 @@
-package com.VirtualLibWeb.VirtualLib.service.alumnoService.alumno_implementation;
+package com.VirtualLibWeb.VirtualLib.service.alumno.alumno_implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.VirtualLibWeb.VirtualLib.persistence.entity.AlumnoEntity;
 import com.VirtualLibWeb.VirtualLib.persistence.repository.IAlumnoRepository;
 import com.VirtualLibWeb.VirtualLib.presentation.controllers.alumno.dto.AlumnoDTO;
-import com.VirtualLibWeb.VirtualLib.service.alumnoService.alumno_interface.IAlumnoService;
+import com.VirtualLibWeb.VirtualLib.service.alumno.alumno_interface.IAlumnoService;
 
 @Service
 public class AlumnoServiceImpl implements IAlumnoService {
@@ -56,8 +57,13 @@ public class AlumnoServiceImpl implements IAlumnoService {
     }
 
     @Override
-    public List<AlumnoEntity> findAll() {
-        return alumnoRepository.findAll();
+    public List<AlumnoDTO> findAll() {
+        List<AlumnoEntity> alumnosEntity = alumnoRepository.findAll();
+        List<AlumnoDTO> alumnosDTOs = new ArrayList<>();
+        alumnosEntity.forEach(alumnoEntity -> {
+            alumnosDTOs.add(toDTO(alumnoEntity));
+        });
+        return alumnosDTOs;
     }
 
     @Override
@@ -67,14 +73,52 @@ public class AlumnoServiceImpl implements IAlumnoService {
 
     @Override
     public AlumnoEntity findByLegajo(Long legajo) {
+
         return alumnoRepository.findByLegajo(legajo);
     }
 
     @Override
-    public void update(AlumnoEntity alumnoEntity) {
-        alumnoRepository.update(alumnoEntity.getId(), alumnoEntity.getLegajo(), alumnoEntity.getNombre(),
-                alumnoEntity.getApellido(), alumnoEntity.getTelefono(),
-                alumnoEntity.getEmail());
+    public void update(AlumnoDTO alumnoDTO) {
+        alumnoRepository.update(alumnoDTO.getLegajo(), alumnoDTO.getNombre(),
+                alumnoDTO.getApellido(), alumnoDTO.getTelefono(),
+                alumnoDTO.getEmail());
     }
+
+    @Override // falta corregir. NOTA: posiblemente hay que buscar por email en lugar de por legajo
+    public boolean validarEmail(AlumnoDTO alumnoDTO) {
+
+        if (existsByEmail(alumnoDTO.getEmail())) {
+            AlumnoDTO alumnoBuscado = toDTO(findByEmail(alumnoDTO.getEmail()));
+
+            if (!alumnoBuscado.getLegajo().equals(alumnoDTO.getLegajo())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public AlumnoEntity findByEmail(String email) {
+        return alumnoRepository.findByEmail(email);
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return alumnoRepository.existsByEmail(email);
+    }
+
+    // busca alumnos por nombre o legajo
+    // @Override
+    // public List<AlumnoDTO> findByNombreContainingIgnoreCaseOrLegajoContainingIgnoreCase(String q) {
+    //     List<AlumnoEntity> alumnosEntity = alumnoRepository.findByNombreContainingIgnoreCaseOrLegajoContainingIgnoreCase(q, q);
+
+    //     List<AlumnoDTO> alumnosDTO = new ArrayList<>();
+
+    //     alumnosEntity.forEach(alumnoEntity ->{
+    //         alumnosDTO.add(toDTO(alumnoEntity));
+    //     });
+    //     return alumnosDTO;
+    // }
+
 
 }

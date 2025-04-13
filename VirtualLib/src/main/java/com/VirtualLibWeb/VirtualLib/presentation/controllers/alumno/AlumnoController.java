@@ -10,11 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.VirtualLibWeb.VirtualLib.persistence.entity.AlumnoEntity;
-import com.VirtualLibWeb.VirtualLib.persistence.entity.LibroEntity;
 import com.VirtualLibWeb.VirtualLib.presentation.controllers.alumno.dto.AlumnoDTO;
-import com.VirtualLibWeb.VirtualLib.service.alumnoService.alumno_interface.IAlumnoService;
+import com.VirtualLibWeb.VirtualLib.service.alumno.alumno_interface.IAlumnoService;
 
 import jakarta.validation.Valid;
 
@@ -30,12 +27,14 @@ public class AlumnoController {
         this.alumnoService = alumnoService;
     }
 
+    // Formulario para guardar un alumno
     @GetMapping("/formulario")
     public String alumnosForm(Model model) {
-        model.addAttribute("alumno", new AlumnoEntity());
+        model.addAttribute("alumno", new AlumnoDTO());
         return "forms/form_alumno";
     }
 
+    // Guarda un alumno
     @PostMapping("/guardar")
     public String saveAlumno(@Valid @ModelAttribute("alumno") AlumnoDTO alumnoDTO,
             BindingResult result, RedirectAttributes redirectAttributes) {
@@ -57,10 +56,11 @@ public class AlumnoController {
         return "redirect:/alumnos";
     }
 
+    // Lista todos lo alumnos
     @GetMapping
     public String findAll(Model model) {
 
-        List<AlumnoEntity> alumnos = alumnoService.findAll();
+        List<AlumnoDTO> alumnos = alumnoService.findAll();
 
         if (alumnos.isEmpty()) {
             model.addAttribute("mensaje", "No hay alumnos registrados actualmente.");
@@ -70,6 +70,7 @@ public class AlumnoController {
         return "alumnos/lista_alumnos";
     }
 
+    // Elimina un alumno por su legajo
     @PostMapping("/eliminar/{legajo}")
     public String deleteAlumno(@PathVariable Long legajo, RedirectAttributes redirectAttributes) {
         try {
@@ -81,27 +82,28 @@ public class AlumnoController {
         return "redirect:/alumnos";
     }
 
+    // Formulario para editar un alumno
     @GetMapping("/editar/{legajo}")
     public String editAlumno(@PathVariable Long legajo, Model model, RedirectAttributes redirectAttributes) {
-        AlumnoEntity alumnoEntity = alumnoService.findByLegajo(legajo);
+    
+        AlumnoDTO alumnoDTO = alumnoService.toDTO(alumnoService.findByLegajo(legajo));
 
-        if (alumnoEntity == null) {
+        if (alumnoService.existsByLegajo(legajo)) {
             redirectAttributes.addAttribute("error", "El alumno no existe");
         }
-        model.addAttribute("alumno", alumnoEntity);
+        model.addAttribute("alumno", alumnoDTO);
 
         return "forms/edit_alumno";
     }
 
     // Actualiza un alumno
-    @PostMapping("/actualizar/{id}")
-    public String updateAlumno(@PathVariable Long id, @Valid @ModelAttribute("alumno") AlumnoEntity alumnoEntity,
+    @PostMapping("/actualizar/{legajo}")
+    public String updateAlumno(@PathVariable Long legajo, @Valid @ModelAttribute("alumno") AlumnoDTO alumnoDTO,
             BindingResult result, RedirectAttributes redirectAttributes) {
 
-        AlumnoEntity alumnoBuscado = alumnoService.findByLegajo(alumnoEntity.getLegajo());
 
-        if (alumnoBuscado != null && !alumnoBuscado.getId().equals(id)) {
-            result.rejectValue("legajo", "error.alumno", "El legajo ya está en uso");
+        if (!alumnoService.validarEmail(alumnoDTO)) {
+            result.rejectValue("email", "error.alumno", "El email ya está en uso");
         }
 
         if (result.hasErrors()) {
@@ -109,7 +111,7 @@ public class AlumnoController {
         }
 
         try {
-            alumnoService.update(alumnoEntity);
+            alumnoService.update(alumnoDTO);
             redirectAttributes.addFlashAttribute("success", "Alumno actualizado correctamente");
         } catch (Exception __) {
             redirectAttributes.addFlashAttribute("error", "Error al actualizar el alumno");

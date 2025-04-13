@@ -35,7 +35,7 @@
                                 <th>Editorial</th>
                                 <th>Año</th>
                                 <th>Género</th>
-                                <th>Ejemplares</th>
+                                <th>Ejemplares disponibles</th>
                                 <th>Páginas</th>
                                 <th>Acciones</th>
                             </tr>
@@ -53,6 +53,10 @@
                                 <td th:text="${libro.numeroDePaginas}"></td>
                                 <td class="actions">
                                     
+                                    <form th:action="@{/prestamos/formulario/} + ${libro.isbn}" method="get">
+                                        <button type="submit" class="btn btn-primary">Prestar</button>
+                                    </form>
+
                                     <form th:action="@{/libros/editar/} + ${libro.isbn}" method="get">
                                         <button type="submit" class="btn-edit">Editar</button>
                                     </form>

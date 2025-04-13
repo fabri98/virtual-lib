@@ -11,14 +11,7 @@
             <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
             <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
-            <form th:action="@{/libros/actualizar/} + ${libro.id}" th:object="${libro}" method="post" class="form-section">
-                <input type="hidden" th:field="*{id}"/>
-
-                <div class="form-group">
-                    <label for="isbn">ISBN</label>
-                    <input type="text" th:field="*{isbn}" id="isbn" class="form-control" required>
-                    <span th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" ></span>
-                </div>
+            <form th:action="@{/libros/actualizar/} + ${libro.isbn}" th:object="${libro}" method="post" class="form-section">
 
                 <div class="form-group">
                     <label for="titulo">Título</label>

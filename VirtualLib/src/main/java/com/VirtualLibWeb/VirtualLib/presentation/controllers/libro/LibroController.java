@@ -90,15 +90,9 @@ public class LibroController {
     }
 
     // Actualiza el libro
-    @PostMapping("/actualizar/{id}")
-    public String updateLibro(@PathVariable Long id, @Valid @ModelAttribute("libro") LibroEntity libro,
+    @PostMapping("/actualizar/{isbn}")
+    public String updateLibro(@PathVariable String isbn, @Valid @ModelAttribute("libro") LibroDTO libro,
             BindingResult result, RedirectAttributes redirectAttributes) {
-
-        LibroEntity libroBuscado = libroService.findByIsbn(libro.getIsbn());
-
-        if (libroBuscado != null && !libroBuscado.getId().equals(id)) {
-            result.rejectValue("isbn", "error.libro", "El ISBN ya está en uso");
-        }
 
         if (result.hasErrors()) {
             return "forms/edit_libro";

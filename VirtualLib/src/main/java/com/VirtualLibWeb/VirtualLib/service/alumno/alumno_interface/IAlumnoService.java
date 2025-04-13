@@ -1,4 +1,4 @@
-package com.VirtualLibWeb.VirtualLib.service.alumnoService.alumno_interface;
+package com.VirtualLibWeb.VirtualLib.service.alumno.alumno_interface;
 
 import java.util.List;
 
@@ -7,11 +7,15 @@ import com.VirtualLibWeb.VirtualLib.presentation.controllers.alumno.dto.AlumnoDT
 
 public interface IAlumnoService {
     void saveAlumno(AlumnoDTO alumnoDTO);
-    List<AlumnoEntity> findAll();
+    List<AlumnoDTO> findAll();
     boolean existsByLegajo(Long legajo);
     AlumnoEntity findByLegajo(Long legajo);
     void delete(Long legajo);
     AlumnoEntity toEntity(AlumnoDTO alumnoDTO);
     AlumnoDTO toDTO(AlumnoEntity alumnoEntity);
-    void update(AlumnoEntity alumnoEntity);
+    void update(AlumnoDTO alumnoDTO);
+    boolean validarEmail(AlumnoDTO alumnoDTO);
+    AlumnoEntity findByEmail(String email);
+    boolean existsByEmail(String email);
+   // List<AlumnoDTO> findByNombreContainingIgnoreCaseOrLegajoContainingIgnoreCase(String q);
 }

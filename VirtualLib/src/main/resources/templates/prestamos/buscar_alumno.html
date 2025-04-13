@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments/fragments :: head}"></head>
+  <body>
+    <div class="container">
+      <div th:replace="~{fragments/fragments :: sidebar}"></div>
+
+      <div class="content">
+        <header th:replace="~{fragments/fragments :: header}"></header>
+
+        <div class="books-section">
+          <div class="book-info">
+            <h3>Libro seleccionado:</h3>
+            <p><strong>ISBN:</strong> <span th:text="${libro.isbn}"></span></p>
+            <p><strong>Título:</strong> <span th:text="${libro.titulo}"></span></p>
+            <p><strong>Autor:</strong> <span th:text="${libro.autor}"></span></p>
+          </div>
+
+          <h2>Buscar Alumno para el préstamo</h2>
+
+          <form action="/prestamos/buscar-alumno" method="get">
+            <input type="hidden" name="isbn" th:value="${libro.isbn}" />
+            <label for="legajo">Buscar por legajo del alumno:</label>
+            <input type="number" id="legajo" name="legajo" required />
+            <button type="submit">Buscar alumno</button>
+          </form>
+
+          <div th:if="${alumnos != null}">
+            <h3>Alumno encontrado:</h3>
+            <p><strong>Nombre:</strong> <span th:text="${alumnos.nombre}"></span></p>
+            <p><strong>Legajo:</strong> <span th:text="${alumnos.legajo}"></span></p>
+
+            <a class="btn btn-primary"
+              th:href="@{/prestamos/formulario/{isbn}/{legajo}(isbn=${libro.isbn}, legajo=${alumnos.legajo})}">
+              Seleccionar este alumno
+            </a>
+          </div>
+
+          <div th:if="${alumnos == null}">
+            <p th:if="${param.legajo != null}" style="color:red;">Alumno no encontrado.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

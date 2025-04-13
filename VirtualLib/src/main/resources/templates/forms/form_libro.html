@@ -24,7 +24,7 @@
                 <form th:action="@{/libros/guardar}" method="post" th:object="${libro}">
                     
                     <label for="isbn">ISBN:</label>
-                    <input type="text" id="isbn" name="isbn" th:field="*{isbn}" required>
+                    <input type="number" id="isbn" name="isbn" th:field="*{isbn}" required>
                     <span th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></span>
                     
 

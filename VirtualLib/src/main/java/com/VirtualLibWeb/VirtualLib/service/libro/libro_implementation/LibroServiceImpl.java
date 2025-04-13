@@ -78,11 +78,12 @@ public class LibroServiceImpl implements ILibroService {
     }
 
     @Override
-    public void updateLibro(LibroEntity libro) {
+    public void updateLibro(LibroDTO libro) {
 
-        libroRepository.updateLibro(libro.getId(),
+        libroRepository.updateLibro(
+                libro.getIsbn(),
                 libro.getTitulo(), libro.getAutor(), libro.getEditorial(), libro.getGenero(),
-                libro.getAnioPublicacion(), libro.getCantidadEjemplaresDisponibles(), libro.getIsbn(),
+                libro.getAnioPublicacion(), libro.getCantidadEjemplaresDisponibles(),
                 libro.getNumeroDePaginas());
 
     }

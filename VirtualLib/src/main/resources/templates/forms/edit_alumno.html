@@ -11,14 +11,8 @@
             <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
             <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
-            <form th:action="@{/alumnos/actualizar/} + ${alumno.id}" th:object="${alumno}" method="post" class="form-section">
-                <input type="hidden" th:field="*{id}"/>
+            <form th:action="@{/alumnos/actualizar/} + ${alumno.legajo}" th:object="${alumno}" method="post" class="form-section">
 
-                <div class="form-group">
-                    <label for="legajo">Legajo</label>
-                    <input type="number" th:field="*{legajo}" id="legajo" class="form-control" required>
-                    <span th:if="${#fields.hasErrors('legajo')}" th:errors="*{legajo}" ></span>
-                </div>
 
                 <div class="form-group">
                     <label for="nombre">Nombre</label>

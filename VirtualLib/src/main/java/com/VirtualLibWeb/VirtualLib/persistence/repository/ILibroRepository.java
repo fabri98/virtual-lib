@@ -17,18 +17,18 @@ public interface ILibroRepository extends JpaRepository<LibroEntity, Long> {
        @Transactional
        @Query("UPDATE LibroEntity l SET l.titulo = :titulo, l.autor = :autor, l.editorial = :editorial, " +
                      "l.genero = :genero, l.anioPublicacion = :anioPublicacion, " +
-                     "l.cantidadEjemplaresDisponibles = :cantidadEjemplaresDisponibles, " +
-                     "l.isbn = :isbn WHERE l.id = :id")
-       void updateLibro(@Param("id") Long id,
+                     "l.cantidadEjemplaresDisponibles = :cantidadEjemplaresDisponibles WHERE l.isbn = :isbn")
+       void updateLibro(
+                     @Param("isbn") String isbn,
                      @Param("titulo") String titulo,
                      @Param("autor") String autor,
                      @Param("editorial") String editorial,
                      @Param("genero") String genero,
                      @Param("anioPublicacion") String anioPublicacion,
                      @Param("cantidadEjemplaresDisponibles") int cantidadEjemplaresDisponibles,
-                     @Param("isbn") String isbn,
                      @Param("numeroDePaginas") int numero_de_paginas);
 
        boolean existsByIsbn(String isbn); // query method
+
        LibroEntity findByIsbn(String isbn);
 }

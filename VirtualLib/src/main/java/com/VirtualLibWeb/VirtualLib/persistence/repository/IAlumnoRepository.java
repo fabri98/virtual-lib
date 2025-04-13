@@ -1,5 +1,7 @@
 package com.VirtualLibWeb.VirtualLib.persistence.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,18 +14,23 @@ import jakarta.transaction.Transactional;
 
 @Repository
 public interface IAlumnoRepository extends JpaRepository<AlumnoEntity, Long> {
-    boolean existsByLegajo(Long legajo);
+        boolean existsByLegajo(Long legajo);
+        boolean existsByEmail(String email);
 
-    AlumnoEntity findByLegajo(Long legajo);
+        AlumnoEntity findByLegajo(Long legajo);
+        AlumnoEntity findByEmail(String email);
+        //List<AlumnoEntity> findByNombreContainingIgnoreCaseOrLegajoContainingIgnoreCase(String nombre, String legajo);
 
-    @Modifying
-    @Transactional
-    @Query("UPDATE AlumnoEntity a SET a.legajo = :legajo, a.nombre = :nombre, a.apellido = :apellido, " +
-            "a.telefono = :telefono, a.email = :email WHERE a.id = :id")
-    void update(@Param("id") Long id,
-            @Param("legajo") Long legajo,
-            @Param("nombre") String nombre,
-            @Param("apellido") String apellido,
-            @Param("telefono") String telefono,
-            @Param("email") String email);
+        @Modifying
+        @Transactional
+        @Query("UPDATE AlumnoEntity a SET a.nombre = :nombre, a.apellido = :apellido, " +
+                        "a.telefono = :telefono, a.email = :email WHERE a.legajo = :legajo")
+        void update(
+                        @Param("legajo") Long legajo,
+                        @Param("nombre") String nombre,
+                        @Param("apellido") String apellido,
+                        @Param("telefono") String telefono,
+                        @Param("email") String email);
+
+
 }

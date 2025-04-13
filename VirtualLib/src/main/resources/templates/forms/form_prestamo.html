@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments/fragments :: head}"></head>
+  <body>
+    <div class="container">
+      <div th:replace="~{fragments/fragments :: sidebar}"></div>
+
+      <div class="content">
+        <header th:replace="~{fragments/fragments :: header}"></header>
+
+        <div class="books-section">
+          <div class="book-info">
+            <h3>Libro seleccionado:</h3>
+            <p><strong>ISBN:</strong> <span th:text="${libro.isbn}"></span></p>
+            <p>
+              <strong>Título:</strong> <span th:text="${libro.titulo}"></span>
+            </p>
+            <p>
+              <strong>Autor:</strong> <span th:text="${libro.autor}"></span>
+            </p>
+          </div>
+
+          <h3>Alumno seleccionado:</h3>
+          <p>
+            <strong>Nombre:</strong> <span th:text="${alumno.nombre}"></span>
+          </p>
+          <p>
+            <strong>Legajo:</strong> <span th:text="${alumno.legajo}"></span>
+          </p>
+
+          <form
+            th:action="@{/prestamos/guardar}"
+            method="post"
+            th:object="${prestamo}"
+          >
+            <input type="hidden" th:field="*{libro.isbn}" />
+            <input type="hidden" th:field="*{alumno.legajo}" />
+
+            <label>Fecha de préstamo:</label>
+            <input type="date" th:field="*{fechaPrestamo}" required />
+
+            <label>Fecha de devolución:</label>
+            <input type="date" th:field="*{fechaDevolucion}" required />
+
+            <button type="submit">Confirmar préstamo</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

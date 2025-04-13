@@ -11,7 +11,7 @@ public interface ILibroService {
     LibroEntity findLibroById(Long id);
     List<LibroDTO> findAll();
     void deleteLibro(String isbn);
-    void updateLibro(LibroEntity libro);
+    void updateLibro(LibroDTO libro);
     boolean existsByIsbn(String isbn);
     LibroEntity findByIsbn(String isbn);
     LibroDTO toDTO(LibroEntity libroEntity);
