@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.VirtualLibWeb.VirtualLib.service.user.usuario_security.UserDetailsServiceImpl;
+import com.VirtualLibWeb.VirtualLib.auth.service.usuario_security.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
